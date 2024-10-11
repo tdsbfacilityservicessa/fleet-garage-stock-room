@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="./styles.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script src="//js.jotform.com/JotFormCustomWidget.min.js"></script>
+</head>
+
+<body>
+    <div id="dropdown-wrapper">
+        <button id="dropdown-button" onclick="openDropdown()" class="dropbtn"><span id="button-text">Please select</span><span class="material-symbols-outlined">
+        arrow_drop_down
+        </span></button>
+        <div id="dropdown" class="dropdown-content">
+            <input type="text" placeholder="Search.." id="input" onkeyup="filterFunction()">
+            <div id="dropdown-options" class="dropdown-options-wrapper">
+                <!-- Options will be populated here -->
+            </div>
+        </div>
+        <div class="price-text-container" style="display: none;">
+            Price: <span id="price-text">22.22</span>
+        </div>
+    </div>
+
+    <script src="./script.js"></script>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+        import { getDatabase, ref, onValue } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-database.js"
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyA5E1hG7h1G4C563qFgHid1C9tP4pCLJ-s",
+            authDomain: "tdsb-fleet-garage-stock-room.firebaseapp.com",
+            databaseURL: "https://tdsb-fleet-garage-stock-room-default-rtdb.firebaseio.com",
+            projectId: "tdsb-fleet-garage-stock-room",
+            storageBucket: "tdsb-fleet-garage-stock-room.appspot.com",
+            messagingSenderId: "123946461641",
+            appId: "1:123946461641:web:cd0e84ce6465588d122018"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
+        // The ID of the Google Sheets file and the Sheet name
+        const nameRef = ref(db, '198F6gpRMIYsSl-NOG2PU-wihQEgoOjaspbR7EU3PIWg/Sheet1/');
+
+        var selectedValue = "DEFAULT";
+        var optionCost = "DEFAULT";
+
+        onValue(nameRef, (snapshot) => {
+            populateDropdown(snapshot);
+        });
+
+        function populateDropdown(snapshot) {
+            const dropdown = document.getElementById("dropdown-options");
+
+            // Clear existing
+            document.querySelectorAll('#dropdown-options span').forEach(option => option.remove())
+
+            snapshot.forEach((childSnapshot) => {
+                const childData1 = childSnapshot.val()["Part Number"];
+                const childData2 = childSnapshot.val().Description;
+                const childPrice = childSnapshot.val().Cost;
+
+                const option = document.createElement("span");
+                option.innerHTML = childData1 + " ("  + childData2 + ")";
+                
+                option.onclick =  function() {
+                    document.getElementById("button-text").innerText = this.innerText;
+                    selectedValue = this.innerText;
+                    optionCost = childPrice;
+                    document.getElementById("dropdown").classList.remove("show");
+
+                    // Display the Price text
+                    document.getElementById("price-text").innerText = childPrice;
+                    document.querySelector(".price-text-container").style.display = "";
+
+                }
+                dropdown.appendChild(option);
+            })
+        }
+
+        //always subscribe to ready event and implement widget related code
+        //inside callback function , it is the best practice while developing widgets
+        JFCustomWidget.subscribe("ready", function () {
+            // Resize iframe to initial height
+            JFCustomWidget.requestFrameResize({ height: 150 });
+
+            // Add event listener to dropdown
+            var dropdownBtn = document.getElementById('dropdown-button');
+            var dropdown = document.getElementById('dropdown');
+
+            dropdownBtn.addEventListener('click', function() {
+                if (dropdown.classList.contains("show")) {
+                    JFCustomWidget.requestFrameResize({ height: 400 });
+                } else {
+                    JFCustomWidget.requestFrameResize({ height: 150 });
+                }
+            });
+
+            document.getElementById("dropdown-options").addEventListener("click", function() {
+                JFCustomWidget.requestFrameResize({height: 150});
+            })
+
+            //subscribe to form submit event
+            JFCustomWidget.subscribe("submit", function () {
+                var msg = {
+                    //you should valid attribute to data for JotForm
+                    //to be able to use youw widget as required
+                    valid: true,
+                    value: selectedValue + " [" + optionCost + "]"
+                }
+                console.log("This is Message value" + msg.value);
+                // send value to JotForm
+                JFCustomWidget.sendSubmit(msg);
+            });
+        });
+
+    </script>
+
+</body>
+</html>
