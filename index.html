@@ -48,8 +48,8 @@
         // The ID of the Google Sheets file and the Sheet name
         const nameRef = ref(db, '198F6gpRMIYsSl-NOG2PU-wihQEgoOjaspbR7EU3PIWg/Sheet1/');
 
-        var selectedValue = "";
-        var optionCost = "";
+        var selectedValue = null;
+        var optionCost = null;
 
         onValue(nameRef, (snapshot) => {
             populateDropdown(snapshot);
