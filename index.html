@@ -105,6 +105,7 @@
 
             document.getElementById("dropdown-options").addEventListener("click", function() {
                 JFCustomWidget.requestFrameResize({height: 150});
+                console.log("This is the selected value: " + selectedValue);
                 JFCustomWidget.sendData(selectedValue);
             })
 
