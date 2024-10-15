@@ -46,6 +46,10 @@
     width: inherit;
     height: 55px;
   }
+
+  #button-text {
+    color: #999999;
+  }
   
   /* Links inside the dropdown */
   .dropdown-content span {
