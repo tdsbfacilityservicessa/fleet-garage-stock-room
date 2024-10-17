@@ -88,7 +88,7 @@
         //inside callback function , it is the best practice while developing widgets
         JFCustomWidget.subscribe("ready", function () {
             // Resize iframe to initial height
-            JFCustomWidget.requestFrameResize({ height: 150 });
+            JFCustomWidget.requestFrameResize({ height: 130 });
 
             // Add event listener to dropdown
             var dropdownBtn = document.getElementById('dropdown-button');
@@ -99,14 +99,12 @@
                     JFCustomWidget.requestFrameResize({ height: 400 });
                 
                 } else {
-                    JFCustomWidget.requestFrameResize({ height: 150 });
+                    JFCustomWidget.requestFrameResize({ height: 130 });
                 }
             });
 
             document.getElementById("dropdown-options").addEventListener("click", function() {
-                JFCustomWidget.requestFrameResize({height: 150});
-                console.log("This is the selected value: " + selectedValue);
-                JFCustomWidget.sendData(selectedValue);
+                JFCustomWidget.requestFrameResize({height: 130});
             })
 
 
