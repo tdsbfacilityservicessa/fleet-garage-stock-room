@@ -86,7 +86,7 @@
 
         //always subscribe to ready event and implement widget related code
         //inside callback function , it is the best practice while developing widgets
-        JFCustomWidget.subscribe("ready", function (data) {
+        JFCustomWidget.subscribe("ready", function () {
             // Resize iframe to initial height
             JFCustomWidget.requestFrameResize({ height: 100 });
 
@@ -105,15 +105,21 @@
 
             document.getElementById("dropdown-options").addEventListener("click", function() {
                 JFCustomWidget.requestFrameResize({height: 120});
-                console.log("This is the selected value: " + selectedValue);
-                JFCustomWidget.sendData(selectedValue);
             })
+
+            var submissionData = {
+                valid: false,
+                value: ""
+            }
 
 
             //subscribe to form submit event
             JFCustomWidget.subscribe("submit", function () {
-                console.log("This is Data\n")
-                console.log(data)
+                if (selectedValue != null) {
+                    submissionData.valid = true;
+                    submissionData.value = selectedValue + " [" + optionCost + "]"
+                    JFCustomWidget.sendData(submissionData);
+                } 
 
                 // var msg = {
                 //     //you should valid attribute to data for JotForm
