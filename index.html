@@ -86,7 +86,7 @@
 
         //always subscribe to ready event and implement widget related code
         //inside callback function , it is the best practice while developing widgets
-        JFCustomWidget.subscribe("ready", function () {
+        JFCustomWidget.subscribe("ready", function (data) {
             // Resize iframe to initial height
             JFCustomWidget.requestFrameResize({ height: 150 });
 
@@ -105,22 +105,34 @@
 
             document.getElementById("dropdown-options").addEventListener("click", function() {
                 JFCustomWidget.requestFrameResize({height: 150});
-                console.log("This is the selected value: " + selectedValue);
-                JFCustomWidget.sendData(selectedValue);
             })
 
 
+            var submissionData = {
+                valid: false,
+                value: ""
+            }
+
+            if (selectedValue != null) {
+                submissionData.valid = true;
+                submissionData.value = selectedValue + " [" + optionCost + "]"
+                JFCustomWidget.sendData(submissionData);
+            } 
+
             //subscribe to form submit event
             JFCustomWidget.subscribe("submit", function () {
-                var msg = {
-                    //you should valid attribute to data for JotForm
-                    //to be able to use youw widget as required
-                    valid: true,
-                    value: selectedValue + " [" + optionCost + "]"
-                }
-                console.log("This is Message value" + msg.value);
+                console.log("This is Data\n")
+                console.log(data)
+
+                // var msg = {
+                //     //you should valid attribute to data for JotForm
+                //     //to be able to use youw widget as required
+                //     valid: true,
+                //     value: selectedValue + " [" + optionCost + "]"
+                // }
+                console.log("This is Submission value" + submissionData);
                 // send value to JotForm
-                JFCustomWidget.sendSubmit(msg);
+                JFCustomWidget.sendSubmit(submissionData);
             });
         });
 
