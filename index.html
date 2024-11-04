@@ -121,10 +121,6 @@
 
 
             document.getElementById("close-icon").addEventListener("click", function() {
-                event.stopImmediatePropagation(); 
-                JFCustomWidget.showWidgetError("Please select a Part Number").
-                console.log(selectedValue)
-                console.log("I Will Reset The Value")
                 selectedValue = null
                 optionCost = null
                 JFCustomWidget.requestFrameResize({height: 100});
