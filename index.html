@@ -122,28 +122,6 @@
             // })
 
 
-            document.getElementById('close-icon').addEventListener('click', event => {
-              // Prevent the other event listener from triggering
-              event.stopImmediatePropagation(); 
-
-              // Remove the selected option
-              document.getElementById("button-text").innerText = "Please select";
-
-              // Remove the Price tag
-              document.getElementById("price-text").innerText = "";
-              document.querySelector(".price-text-container").style.display = "none";
-
-              // Remove the close icon
-              document.getElementById('close-icon').style.display = "none";
-
-              console.log(selectedValue)
-                console.log("I Will Reset The Value")
-                selectedValue = null
-                optionCost = null
-                console.log(selectedValue)
-                JFCustomWidget.requestFrameResize({height: 100});
-            });
-
             var submissionData = {
                 valid: false,
                 value: ""
@@ -151,7 +129,7 @@
 
             //subscribe to form submit event
             JFCustomWidget.subscribe("submit", function () {
-                if (selectedValue != null && optionCost != null) {
+                if (selectedValue != null || selectedValue != "" ) {
                     submissionData.valid = true;
                     submissionData.value = selectedValue + " [" + optionCost + "]"
                     JFCustomWidget.sendData(submissionData);
