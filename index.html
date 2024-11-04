@@ -112,14 +112,37 @@
                 JFCustomWidget.requestFrameResize({height: 120});
             })
 
-            document.getElementById("close-icon").addEventListener("click", function() {
-                console.log(selectedValue)
+            // document.getElementById("close-icon").addEventListener("click", function() {
+            //     console.log(selectedValue)
+            //     console.log("I Will Reset The Value")
+            //     selectedValue = null
+            //     optionCost = null
+            //     console.log(selectedValue)
+            //     JFCustomWidget.requestFrameResize({height: 100});
+            // })
+
+
+            document.getElementById('close-icon').addEventListener('click', event => {
+              // Prevent the other event listener from triggering
+              event.stopImmediatePropagation(); 
+
+              // Remove the selected option
+              document.getElementById("button-text").innerText = "Please select";
+
+              // Remove the Price tag
+              document.getElementById("price-text").innerText = "";
+              document.querySelector(".price-text-container").style.display = "none";
+
+              // Remove the close icon
+              document.getElementById('close-icon').style.display = "none";
+
+              console.log(selectedValue)
                 console.log("I Will Reset The Value")
                 selectedValue = null
                 optionCost = null
                 console.log(selectedValue)
                 JFCustomWidget.requestFrameResize({height: 100});
-            })
+            });
 
             var submissionData = {
                 valid: false,
