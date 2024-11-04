@@ -34,5 +34,7 @@ document.getElementById('close-icon').addEventListener('click', event => {
 
   // Remove the close icon
   document.getElementById('close-icon').style.display = "none";
+
+
 });
   

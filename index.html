@@ -57,6 +57,8 @@
 
         onValue(nameRef, (snapshot) => {
             populateDropdown(snapshot);
+
+
         });
 
         function populateDropdown(snapshot) {
@@ -75,7 +77,7 @@
                 
                 option.onclick =  function() {
                     document.getElementById("button-text").innerText = this.innerText;
-                    selectedValue = this.innerText;
+                    selectedValue = this.innerText ;
                     optionCost = childPrice;
                     document.getElementById("dropdown").classList.remove("show");
                     document.getElementById("close-icon").style.display = "block";
@@ -92,6 +94,11 @@
         //always subscribe to ready event and implement widget related code
         //inside callback function , it is the best practice while developing widgets
         JFCustomWidget.subscribe("ready", function () {
+            var submissionData = {
+                valid: false,
+                value: ""
+            }
+
             // Resize iframe to initial height
             JFCustomWidget.requestFrameResize({ height: 100 });
 
@@ -108,24 +115,17 @@
                 }
             });
 
-            document.getElementById("dropdown-options").addEventListener("click", function() {
+            document.getElementById("close-icon").addEventListener("click", function() {
+                submissionData.valid = false;
+                console.log("The Submission Data is " + submissionData.valid)
                 JFCustomWidget.requestFrameResize({height: 120});
             })
 
-            // document.getElementById("close-icon").addEventListener("click", function() {
-            //     console.log(selectedValue)
-            //     console.log("I Will Reset The Value")
-            //     selectedValue = null
-            //     optionCost = null
-            //     console.log(selectedValue)
-            //     JFCustomWidget.requestFrameResize({height: 100});
-            // })
 
-
-            var submissionData = {
-                valid: false,
-                value: ""
-            }
+            document.getElementById("close-icon").addEventListener("click", function() {
+                
+                JFCustomWidget.requestFrameResize({height: 100});
+            })
 
             //subscribe to form submit event
             JFCustomWidget.subscribe("submit", function () {
