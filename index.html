@@ -113,7 +113,12 @@
             })
 
             document.getElementById("close-icon").addEventListener("click", function() {
-                selectedValue = null;
+                console.log(selectedValue)
+                console.log("I Will Reset The Value")
+                selectedValue = null
+                optionCost = null
+                console.log(selectedValue)
+                JFCustomWidget.requestFrameResize({height: 100});
             })
 
             var submissionData = {
@@ -123,7 +128,7 @@
 
             //subscribe to form submit event
             JFCustomWidget.subscribe("submit", function () {
-                if (selectedValue != null) {
+                if (selectedValue != null && optionCost != null) {
                     submissionData.valid = true;
                     submissionData.value = selectedValue + " [" + optionCost + "]"
                     JFCustomWidget.sendData(submissionData);
