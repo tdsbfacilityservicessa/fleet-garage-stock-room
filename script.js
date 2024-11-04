@@ -21,6 +21,7 @@ function filterFunction() {
 }
 
 document.getElementById('close-icon').addEventListener('click', event => {
+  console.log("Clicked!")
   // Prevent the other event listener from triggering
   event.stopImmediatePropagation(); 
 
