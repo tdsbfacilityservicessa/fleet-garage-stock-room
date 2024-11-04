@@ -112,11 +112,14 @@
                 JFCustomWidget.requestFrameResize({height: 120});
             })
 
+            document.getElementById("close-icon").addEventListener("click", function() {
+                selectedValue = null;
+            })
+
             var submissionData = {
                 valid: false,
                 value: ""
             }
-
 
             //subscribe to form submit event
             JFCustomWidget.subscribe("submit", function () {
