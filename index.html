@@ -8,9 +8,13 @@
 
 <body>
     <div id="dropdown-wrapper">
-        <button id="dropdown-button" onclick="openDropdown()" class="dropbtn"><span id="button-text">Please select</span><span class="material-symbols-outlined">
-        arrow_drop_down
-        </span></button>
+        <button id="dropdown-button" onclick="openDropdown()" class="dropbtn">
+            <span id="button-text">Please select</span>
+            <div class="dropbtn-icons-group">
+                <span id="close-icon" class="material-symbols-outlined">close</span>
+                <span class="material-symbols-outlined">arrow_drop_down</span>
+            </div>
+        </button>
         <div id="dropdown" class="dropdown-content">
             <input type="text" placeholder="Search.." id="input" onkeyup="filterFunction()">
             <div id="dropdown-options" class="dropdown-options-wrapper">
@@ -74,6 +78,7 @@
                     selectedValue = this.innerText;
                     optionCost = childPrice;
                     document.getElementById("dropdown").classList.remove("show");
+                    document.getElementById("close-icon").style.display = "block";
 
                     // Display the Price text
                     document.getElementById("price-text").innerText = childPrice;

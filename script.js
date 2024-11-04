@@ -19,4 +19,19 @@ function filterFunction() {
       }
     }
 }
+
+document.getElementById('close-icon').addEventListener('click', event => {
+  // Prevent the other event listener from triggering
+  event.stopImmediatePropagation(); 
+
+  // Remove the selected option
+  document.getElementById("button-text").innerText = "Please select";
+
+  // Remove the Price tag
+  document.getElementById("price-text").innerText = "";
+  document.querySelector(".price-text-container").style.display = "none";
+
+  // Remove the close icon
+  document.getElementById('close-icon').style.display = "none";
+});
   
